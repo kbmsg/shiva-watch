@@ -18,6 +18,15 @@ HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
 }
  
+HEBREW_RANGE = chr(0x0590) + "-" + chr(0x05FF)
+ 
+ 
+def heb(*codepoints):
+    return "".join(chr(c) for c in codepoints)
+ 
+ 
+SEE_MORE_HE = heb(0x05DC, 0x05E8, 0x05D0, 0x05D5, 0x05EA) + " " + heb(0x05E2, 0x05D5, 0x05D3)
+ 
  
 def fetch_page():
     url = f"{PAGE_URL}?cb={int(time.time())}"
@@ -50,13 +59,31 @@ def html_to_text(raw):
     return text.strip()
  
  
+def first_english_sentence(text):
+    match = re.search(r".+?[.!?](\s|$)", text)
+    return match.group(0).strip() if match else text[:200].strip()
+ 
+ 
+def first_hebrew_sentence(text):
+    match = re.search(rf"([{HEBREW_RANGE}][^.!?\n]*[.!?])", text)
+    return match.group(1).strip() if match else None
+ 
+ 
 def build_message(clean_text):
     if len(clean_text) <= MAX_MESSAGE_LEN:
+        # Full section already naturally contains both English and Hebrew,
+        # since each notice is written in both languages back to back.
         return f"\U0001F514 Shiva page updated:\n\n{clean_text}\n\nFull page: {PAGE_LINK}"
-    # Too long - send just the first sentence plus a link, as requested.
-    match = re.search(r".+?[.!?](\s|$)", clean_text)
-    first_sentence = match.group(0).strip() if match else clean_text[:200].strip()
-    return f"\U0001F514 Shiva page updated: {first_sentence} For more information see: {PAGE_LINK}"
+ 
+    # Too long - send first sentence in English and in Hebrew, plus a link.
+    en_sentence = first_english_sentence(clean_text)
+    he_sentence = first_hebrew_sentence(clean_text)
+ 
+    parts = [f"\U0001F514 Shiva page updated:", en_sentence]
+    if he_sentence:
+        parts.append(he_sentence)
+    parts.append(f"{SEE_MORE_HE}: {PAGE_LINK}")
+    return "\n\n".join(parts)
  
  
 def main():
