@@ -22,3 +22,7 @@ Ongoing peace of mind: every 15 minutes a new run appears in the Actions tab whe
 
 If you want a forced, deliberate test rather than waiting for a real site edit: edit last_snapshot.txt in the repo to any different text, then hit "Run workflow" manually — it'll compare against the real live page, see a mismatch, and fire the alert.<p>
 That's a clean way to re-verify anytime without needing an actual change on the shul website.<p>
+
+To fix the hebrew, note it is written left to right as below<p>
+The lamed ל is 0x05D4 and the taf ת is 0x05EA<p>
+BEREAVEMENT_HE = heb(0x05D4, 0x05D5, 0x05D3, 0x05E2, 0x05D5, 0x05EA) + " " + heb(0x05E9, 0x05DB, 0x05D5, 0x05DC)
