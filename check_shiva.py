@@ -80,7 +80,7 @@ def build_message(clean_text):
     en_sentence = first_english_sentence(clean_text)
     he_sentence = first_hebrew_sentence(clean_text)
  
-   parts = [f"\U0001F514 Bereavement Notice / {BEREAVEMENT_HE}:", en_sentence]
+    parts = [f"\U0001F514 Bereavement Notice / {BEREAVEMENT_HE}:", en_sentence]
     if he_sentence:
         parts.append(he_sentence)
     parts.append(f"For more information / {SEE_MORE_HE}: {PAGE_LINK}")   
