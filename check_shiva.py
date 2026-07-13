@@ -82,7 +82,8 @@ def build_message(clean_text):
     parts = [f"\U0001F514 Shiva page updated:", en_sentence]
     if he_sentence:
         parts.append(he_sentence)
-    parts.append(f"{SEE_MORE_HE}: {PAGE_LINK}")
+    parts.append(f"For more information / {SEE_MORE_HE}: {PAGE_LINK}")   
+ parts.append(f"{SEE_MORE_HE}: {PAGE_LINK}")
     return "\n\n".join(parts)
  
  
