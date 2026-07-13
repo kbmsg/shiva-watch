@@ -83,7 +83,7 @@ def build_message(clean_text):
     if he_sentence:
         parts.append(he_sentence)
     parts.append(f"For more information / {SEE_MORE_HE}: {PAGE_LINK}")   
- parts.append(f"{SEE_MORE_HE}: {PAGE_LINK}")
+    #parts.append(f"{SEE_MORE_HE}: {PAGE_LINK}")
     return "\n\n".join(parts)
  
  
