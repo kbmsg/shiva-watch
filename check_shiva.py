@@ -26,6 +26,7 @@ def heb(*codepoints):
  
  
 SEE_MORE_HE = heb(0x05DC, 0x05E8, 0x05D0, 0x05D5, 0x05EA) + " " + heb(0x05E2, 0x05D5, 0x05D3)
+BEREAVEMENT_HE = heb(0x05D4, 0x05D5, 0x05D3, 0x05E2, 0x05D5, 0x05EA) + " " + heb(0x05E9, 0x05DB, 0x05D5, 0x05DC)
  
  
 def fetch_page():
@@ -73,13 +74,13 @@ def build_message(clean_text):
     if len(clean_text) <= MAX_MESSAGE_LEN:
         # Full section already naturally contains both English and Hebrew,
         # since each notice is written in both languages back to back.
-        return f"\U0001F514 Shiva page updated:\n\n{clean_text}\n\nFull page: {PAGE_LINK}"
+        return f"\U0001F514 Bereavement Notice / {BEREAVEMENT_HE}:\n\n{clean_text}\n\nFull page: {PAGE_LINK}"
  
     # Too long - send first sentence in English and in Hebrew, plus a link.
     en_sentence = first_english_sentence(clean_text)
     he_sentence = first_hebrew_sentence(clean_text)
  
-    parts = [f"\U0001F514 Bereavement Notice {bereavement_HE} :", en_sentence]
+   parts = [f"\U0001F514 Bereavement Notice / {BEREAVEMENT_HE}:", en_sentence]
     if he_sentence:
         parts.append(he_sentence)
     parts.append(f"For more information / {SEE_MORE_HE}: {PAGE_LINK}")   
